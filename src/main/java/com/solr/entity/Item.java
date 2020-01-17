@@ -35,7 +35,7 @@ public class Item implements Serializable {
      * 商品价格，单位为：元
      */
     @Field("item_price")
-    private String price;
+    private Double price;
 
     private Integer stockCount;
 

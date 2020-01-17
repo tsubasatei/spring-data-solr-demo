@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/data/solr http://www.springframework.org/schema/data/solr/spring-solr.xsd">
 
     <!-- solr服务器地址 -->
-    <solr:solr-client id="solrClient" url="http://192.168.239.11:8080/solr"/>
+    <solr:solr-client id="solrClient" url="http://192.168.239.11:8983/solr"/>
     <!-- solr模板，使用solr模板可对索引库进行CRUD的操作 -->
     <bean id="solrTemplate" class="org.springframework.data.solr.core.SolrTemplate">
         <constructor-arg ref="solrClient"/>

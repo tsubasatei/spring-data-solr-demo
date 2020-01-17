@@ -12,6 +12,7 @@ import org.springframework.data.solr.core.query.result.ScoredPage;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,22 +33,22 @@ public class TestSolrTemplate {
         item.setGoodsId(10L);
         item.setSeller("华为2号专卖店");
         item.setTitle("荣耀V20");
-        item.setPrice("2000");
+        item.setPrice(2000.0);
 
-        solrTemplate.saveBean("collection1", item);
-        solrTemplate.commit("collection1");
+        solrTemplate.saveBean("pyg_db", item);
+        solrTemplate.commit("pyg_db");
     }
 
     @Test
     public void testFindById () {
-        Optional<Item> optionalItem = solrTemplate.getById("collection1", "1", Item.class);
+        Optional<Item> optionalItem = solrTemplate.getById("pyg_db", "1", Item.class);
         System.out.println(optionalItem.get());
     }
     
     @Test
     public void testDelete () {
-        solrTemplate.deleteByIds("collection1", "2");
-        solrTemplate.commit("collection1");
+        solrTemplate.deleteByIds("pyg_db", "2");
+        solrTemplate.commit("pyg_db");
     }
 
     @Test
@@ -61,11 +62,11 @@ public class TestSolrTemplate {
                 .setGoodsId(1L)
                 .setSeller("华为2号专卖店")
                 .setTitle("华为Mate" + i)
-                .setPrice(2000 + i + "");
+                .setPrice(2000.0 + i);
             list.add(item);
         }
-        solrTemplate.saveBeans("collection1", list);
-        solrTemplate.commit("collection1");
+        solrTemplate.saveBeans("pyg_db", list);
+        solrTemplate.commit("pyg_db");
     }
 
     @Test
@@ -73,7 +74,7 @@ public class TestSolrTemplate {
         Query query = new SimpleQuery("*:*");
         query.setOffset(20L); // 开始索引（默认0）
         query.setRows(20); // 每页记录数(默认10)
-        ScoredPage<Item> page = solrTemplate.queryForPage("collection1", query, Item.class);
+        ScoredPage<Item> page = solrTemplate.queryForPage("pyg_db", query, Item.class);
         System.out.println("总记录数：" + page.getTotalElements());
         System.out.println("总页数：" + page.getTotalPages());
         showList(page.getContent());
@@ -93,7 +94,7 @@ public class TestSolrTemplate {
         query.addCriteria(criteria);
         //query.setOffset(20);//开始索引（默认0）
         //query.setRows(20);//每页记录数(默认10)
-        ScoredPage<Item> page = solrTemplate.queryForPage("collection1", query, Item.class);
+        ScoredPage<Item> page = solrTemplate.queryForPage("pyg_db", query, Item.class);
         System.out.println("总记录数：" + page.getTotalElements());
         List<Item> list = page.getContent();
         showList(list);
@@ -102,8 +103,8 @@ public class TestSolrTemplate {
     @Test
     public void testDeleteAll () {
         Query query = new SimpleQuery("*:*");
-        solrTemplate.delete("collection1", query);
-        solrTemplate.commit("collection1");
+        solrTemplate.delete("pyg_db", query);
+        solrTemplate.commit("pyg_db");
     }
 
 
